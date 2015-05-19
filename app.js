@@ -1,4 +1,4 @@
-var app = angular.module("animTodo", ["ui.sortable","ngAnimate","angular.filter"]);
+var app = angular.module("animTodo", ["ui.sortable","ngAnimate","angular.filter", "infinite-scroll"]);
 
 app.controller("TodoCtrl", function($scope, $filter) {
   $scope.title = "Board Name";
@@ -11,11 +11,54 @@ app.controller("TodoCtrl", function($scope, $filter) {
       {text: "Historical Task 3", complete: true, cleanup_date: "2015-03-03"},
       {text: "Historical Task 4", complete: false, cleanup_date: "2015-03-03"},
       {text: "Historical Task 5", complete: true, cleanup_date: "2015-04-03"},
-      {text: "Historical Task 6", complete: true, cleanup_date: "2015-04-06"}
-      
+      {text: "Historical Task 6", complete: true, cleanup_date: "2015-04-06"},
+      {text: "Historical Task 7", complete: true, cleanup_date: "2015-04-06"},
+      {text: "Historical Task 8", complete: true, cleanup_date: "2015-04-07"},
+      {text: "Historical Task 9", complete: true, cleanup_date: "2015-04-07"},
+      {text: "Historical Task 10", complete: true, cleanup_date: "2015-04-08"},
+      {text: "Historical Task 11", complete: false, cleanup_date: "2015-04-08"},
+      {text: "Historical Task 12", complete: true, cleanup_date: "2015-04-08"},
+      {text: "Historical Task 13", complete: false, cleanup_date: "2015-04-08"},
+      {text: "Historical Task 14", complete: true, cleanup_date: "2015-04-10"},
+      {text: "Historical Task 15", complete: true, cleanup_date: "2015-04-10"},
+      {text: "Historical Task 16", complete: false, cleanup_date: "2015-04-13"},
+      {text: "Historical Task 17", complete: true, cleanup_date: "2015-04-14"},
+      {text: "Historical Task 18", complete: false, cleanup_date: "2015-04-15"},
+      {text: "Historical Task 19", complete: false, cleanup_date: "2015-04-15"},
+      {text: "Historical Task 20", complete: false, cleanup_date: "2015-04-15"},
+      {text: "Historical Task 21", complete: true, cleanup_date: "2015-04-15"},
+      {text: "Historical Task 22", complete: true, cleanup_date: "2015-04-15"},
+      {text: "Historical Task 23", complete: true, cleanup_date: "2015-04-18"},
+      {text: "Historical Task 24", complete: false, cleanup_date: "2015-05-01"},
+      {text: "Historical Task 25", complete: true, cleanup_date: "2015-05-06"},
+      {text: "Historical Task 26", complete: false, cleanup_date: "2015-05-06"},
+      {text: "Historical Task 27", complete: true, cleanup_date: "2015-05-06"},
+      {text: "Historical Task 28", complete: false, cleanup_date: "2015-05-08"},
+      {text: "Historical Task 29", complete: true, cleanup_date: "2015-05-08"},
+      {text: "Historical Task 30", complete: false, cleanup_date: "2015-05-08"}
   ];
   $scope.newTodo = "";
-  
+    
+  $scope.viewItemsHistory = [];
+  $scope.viewOffset = 0;
+    
+  $scope.viewMoreHistory = function(){
+      count = 5;
+      offset = $scope.viewOffset;
+      while(count != 0){
+          if(offset >= $scope.itemsHistory.length)
+              return;
+          if($scope.viewItemsHistory.indexOf($scope.itemsHistory[offset]) == -1){
+              $scope.viewItemsHistory.push($scope.itemsHistory[offset]);
+              console.log($scope.itemsHistory[offset],offset);
+              count--;
+          }
+          offset++;
+      }
+      $scope.viewOffset = offset;
+      //$scope.$apply();
+  };
+    
   $scope.addTodo = function() {
     $scope.items.push({text: $scope.newTodo, complete: false});
     $scope.newTodo = "";
