@@ -3,6 +3,12 @@
 <head>
 <meta name="description" content="A demonstration of Angular 1.2 with Animate.css" />
   <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    @-ms-viewport{
+      width: device-width;
+    }
+  </style>
   <title>Todo Responsive - Angular</title>
   <link rel="stylesheet" href="//djyhxgczejc94.cloudfront.net/frameworks/bootstrap/3.0.0/themes/white-plum/bootstrap.min.css">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/2.0/animate.min.css">
@@ -51,9 +57,9 @@
       <input type="text" ng-model="newTodo" class="form-control" placeholder="New Todo Item" focus>
     </form>
     
-    <div infinite-scroll='viewMoreHistory()' infinite-scroll-distance='1'  class="history-container" ng-class="{show: showHistory}">
+    <div infinite-scroll='viewMoreHistory()' infinite-scroll-disabled='noMoreResults' infinite-scroll-distance='0.1'  class="history-container" ng-class="{show: showHistory}">
     <div class="history-heading" >History</div>
-    <div ng-repeat="(key, value) in viewItemsHistory | groupBy:'cleanup_date' | toArray:true | orderBy:'-$key'">
+    <div ng-repeat="(key, value) in viewItemsHistory | groupBy:'cleanup_date'">
           <h4>{{value[0].cleanup_date | date : mediumDate }}</h4>
           <div class="history-list list-group">
           <div class="list-group-item todo-item" ng-repeat=" item in value | orderBy: 'text' " ng-class="{'todo-complete': item.complete}">
@@ -64,6 +70,7 @@
           </div>
           </div>
     </div>
+    <div style='clear: both;'></div>
     </div>
   </div>
     
