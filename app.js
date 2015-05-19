@@ -39,24 +39,34 @@ app.controller("TodoCtrl", function($scope, $filter) {
   ];
   $scope.newTodo = "";
     
-  $scope.viewItemsHistory = [];
+  $scope.viewItemsHistory = $scope.itemsHistory;
   $scope.viewOffset = 0;
-    
+  $scope.busyLoadingData = false;
+  $scope.noMoreResults = false;
+  
+
   $scope.viewMoreHistory = function(){
-      count = 5;
+      console.log("sad");
+      if ($scope.busyLoadingData) return;
+      $scope.busyLoadingData = true;
+      count = 10;
       offset = $scope.viewOffset;
       while(count != 0){
           if(offset >= $scope.itemsHistory.length)
+          {
+              $scope.busyLoadingData = false;
+              $scope.noMoreResults = true;
               return;
+          }
           if($scope.viewItemsHistory.indexOf($scope.itemsHistory[offset]) == -1){
               $scope.viewItemsHistory.push($scope.itemsHistory[offset]);
-              console.log($scope.itemsHistory[offset],offset);
               count--;
           }
           offset++;
       }
       $scope.viewOffset = offset;
-      //$scope.$apply();
+      $scope.busyLoadingData = false;
+      
   };
     
   $scope.addTodo = function() {
@@ -69,7 +79,8 @@ app.controller("TodoCtrl", function($scope, $filter) {
     item[0]["cleanup_date"] = moment().format("YYYY-MM-DD");
     item[0]["completed"] = false;
     $scope.itemsHistory.push(item[0]);
-    $scope.$apply();
+    $scope.noMoreResults = false;
+    $scope.viewMoreHistory();
   };
   
   $scope.clearAll = function() {
@@ -87,9 +98,7 @@ app.controller("TodoCtrl", function($scope, $filter) {
       item[0]["cleanup_date"] = moment().format("YYYY-MM-DD");
       if(action === 'add')
           item[0]["completed"] = true;
-      $scope.itemsHistory.push(item[0]);
-      $scope.$apply();
-      
+      $scope.itemsHistory.push(item[0]);      
   };
 
   
