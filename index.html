@@ -57,7 +57,7 @@
       <input type="text" ng-model="newTodo" class="form-control" placeholder="New Todo Item" focus>
     </form>
     
-    <div infinite-scroll='viewMoreHistory()' infinite-scroll-disabled='noMoreResults' infinite-scroll-distance='0.1'  class="history-container" ng-class="{show: showHistory}">
+    <div infinite-scroll='viewMoreHistory()' infinite-scroll-disabled='noMoreResults' infinite-scroll-distance='1'  class="history-container" ng-class="{show: showHistory}">
     <div class="history-heading" >History</div>
     <div ng-repeat="(key, value) in viewItemsHistory | groupBy:'cleanup_date'">
           <h4>{{value[0].cleanup_date | date : mediumDate }}</h4>

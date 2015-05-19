@@ -39,7 +39,7 @@ app.controller("TodoCtrl", function($scope, $filter) {
   ];
   $scope.newTodo = "";
     
-  $scope.viewItemsHistory = $scope.itemsHistory;
+  $scope.viewItemsHistory = [];
   $scope.viewOffset = 0;
   $scope.busyLoadingData = false;
   $scope.noMoreResults = false;
@@ -94,11 +94,11 @@ app.controller("TodoCtrl", function($scope, $filter) {
   $scope.toggleCompleteTodo = function($event, indx){
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
-      var item = $scope.items.splice(indx, 1);
-      item[0]["cleanup_date"] = moment().format("YYYY-MM-DD");
+      var item = $scope.items[index];
+      item["cleanup_date"] = moment().format("YYYY-MM-DD");
       if(action === 'add')
-          item[0]["completed"] = true;
-      $scope.itemsHistory.push(item[0]);      
+          item["completed"] = true;
+      $scope.itemsHistory.push(item);      
   };
 
   
